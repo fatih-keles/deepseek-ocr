@@ -79,6 +79,7 @@ scp -i ~/.ssh/your_key.pem your_file ubuntu@your_oci_instance_ip:/home/ubuntu/
 sudo systemctl edit ollama.service
 ```
 
+Add the following line to bind to all interfaces:
 ```ini
 [Service]
 Environment="OLLAMA_HOST=0.0.0.0"
