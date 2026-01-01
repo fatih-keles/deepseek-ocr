@@ -118,4 +118,8 @@ pip install --no-cache-dir -r requirements.txt
 ## Test Python Script
 ```bash
 time python ocr_client.py ./data/claim_page-1.jpg
+time python ocr_client.py ./data/claim_page-1.jpg --prompt "<|grounding|>Convert the document to markdown."
+time python ocr_client.py ./data/machine-1.png --prompt "Describe this image in detail."
+time python ocr_client.py ./data/machine-1.png --prompt "<|grounding|>Describe this image in detail."
+time python ocr_client.py ./data/construction.png --prompt "Identify all objects in this image, output bounding boxes."
 ```

@@ -18,7 +18,7 @@ def encode_image(image_path):
         print(f"Error: File '{image_path}' not found.")
         sys.exit(1)
 
-def run_ocr(image_path):
+def run_ocr(image_path, prompt):
     if not SERVER_IP:
         print("Error: SERVER_IP not found in .env file.")
         sys.exit(1)
@@ -27,7 +27,7 @@ def run_ocr(image_path):
     
     payload = {
         "model": "deepseek-ocr",
-        "prompt": "Free OCR.",
+        "prompt": prompt,
         "images": [encode_image(image_path)],
         "stream": False,
         "options": {
@@ -45,12 +45,12 @@ def run_ocr(image_path):
     except requests.exceptions.RequestException as e:
         return f"Request Failed: {e}"
     
-def run_ocr_stream(image_path):
+def run_ocr_stream(image_path, prompt ):
     url = f"http://{SERVER_IP}:11434/api/generate"
     
     payload = {
         "model": "deepseek-ocr",
-        "prompt": "Free OCR.",
+        "prompt": prompt,
         "images": [encode_image(image_path)],
         "stream": True,  # Enable streaming
     }
@@ -76,11 +76,16 @@ if __name__ == "__main__":
     # 2. Setup Command Line Arguments
     parser = argparse.ArgumentParser(description="Remote DeepSeek-OCR Client")
     parser.add_argument("image", help="Path to the local image file (JPG/PNG)")
-    
+    # Optional Argument for Prompt (defaults to Free OCR. if not provided)
+    parser.add_argument(
+        "--prompt", "-p", 
+        default="Free OCR.", 
+        help="Custom prompt for the model (e.g., '<|grounding|>Convert to markdown.')"
+    )
     args = parser.parse_args()
 
     # Execute
     # result = run_ocr(args.image)
-    result = run_ocr_stream(args.image)
+    result = run_ocr_stream(args.image, args.prompt)
     print("\n--- OCR RESULTS ---")
     print(result)
