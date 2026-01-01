@@ -13,7 +13,7 @@ git push -u origin main
 ```bash
 git remote add origin https://github.com/fatih-keles/deepseek-ocr.git
 git add .
-git commit -m "removed pip freeze file"
+git commit -m "added client code, requirements, gitignore"
 git push -u origin main
 ```
 
